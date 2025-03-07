@@ -7,7 +7,8 @@ export async function GET(
   req: NextRequest,
   { params }: { params: { city: string } }
 ) {
-  const cityName = params.city;
+  const { city } = await params;
+  const cityName = city;
   const API_KEY = process.env.API_KEY;
   const cityUrl = `${BASE_URL}/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
   try {
