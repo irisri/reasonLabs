@@ -8,8 +8,9 @@ const data = [
   "7. added A/B testing - added a variant that will display the components dynamically  per the A/B testing",
   "8. added presistent variant with useing session storage",
   "9. added a util functuin to get and set from session storage",
-  "10. add a nav bar to navigat to home page and about",
+  "10. added a nav bar to navigat to home page and about",
   "11. fixed the duplicate cities issue and make sure that it's perssistent",
+  "12. added redux",
 ];
 
 const About = () => {
