@@ -33,3 +33,8 @@ export interface WeatherResponse {
     description: string;
   }[];
 }
+
+export interface WeatherDisplayVariant {
+  city: string;
+  weather: WeatherData;
+}

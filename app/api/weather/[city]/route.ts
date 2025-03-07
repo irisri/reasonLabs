@@ -1,4 +1,4 @@
-import { baseUrl } from "@/consts";
+import { BASE_URL } from "@/consts";
 import { convertWeatherResponseToWeatherData } from "@/lib/util";
 import { CityResponse, WeatherData, WeatherResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
@@ -9,7 +9,7 @@ export async function GET(
 ) {
   const cityName = params.city;
   const API_KEY = process.env.API_KEY;
-  const cityUrl = `${baseUrl}/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
+  const cityUrl = `${BASE_URL}/geo/1.0/direct?q=${cityName}&limit=1&appid=${API_KEY}`;
   try {
     const cityResponse = await fetch(cityUrl);
     const cities: CityResponse[] = await cityResponse.json();
@@ -24,7 +24,7 @@ export async function GET(
     const city = cities[0];
     const { lat, lon } = city;
 
-    const weatherUrl = `${baseUrl}/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
+    const weatherUrl = `${BASE_URL}/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`;
 
     const weatherResponse = await fetch(weatherUrl);
     const weatherData: WeatherResponse = await weatherResponse.json();

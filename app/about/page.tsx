@@ -6,6 +6,9 @@ const data = [
   "- get the wether information frim the route: '/api/weather/[city]', this will get  the city information and the wether information ",
   "4. updaed the types to fit the responses from the openweathermap API and added the missing information according to the design - (missing feels like in WeatherData)",
   "5. added a util function to convert the response from the openweathermap API to the weather type that is expected - WeatherData",
+  "6. added A/B testing - added a variant that will display the components dynamically  per the A/B testing",
+  "7. added presistent variant with useing session storage",
+  "8. added a util functuin to get and set from session storage",
 ];
 
 const About = () => {

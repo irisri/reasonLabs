@@ -1,4 +1,4 @@
-import { baseUrl } from "@/consts";
+import { BASE_URL } from "@/consts";
 import { CityResponse } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   }
 
   const API_KEY = process.env.API_KEY;
-  const url = `${baseUrl}/geo/1.0/direct?q=${searchParam}&limit=1&appid=${API_KEY}`;
+  const url = `${BASE_URL}/geo/1.0/direct?q=${searchParam}&limit=1&appid=${API_KEY}`;
 
   try {
     const response = await fetch(url);

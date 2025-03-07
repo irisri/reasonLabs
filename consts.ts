@@ -1,2 +1,3 @@
 export const RECENT_CITIES_KEY = "recent_cities";
-export const baseUrl = "https://api.openweathermap.org";
+export const BASE_URL = "https://api.openweathermap.org";
+export const VARIANT_TESTING_KEY = "weather-variant-testing";

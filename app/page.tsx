@@ -8,6 +8,8 @@ import { WeatherDisplay } from "@/app/components/WeatherDisplay";
 import { getVariant } from "@/lib/abTest";
 import { addToRecentCities } from "@/lib/storage";
 import { City, Variant } from "@/types";
+import { sessionStoreUtil } from "@/lib/util";
+import { VARIANT_TESTING_KEY } from "@/consts";
 
 export default function Home() {
   const [cities, setCities] = useState<City[]>([]);
@@ -15,7 +17,14 @@ export default function Home() {
   const [variant, setVariant] = useState<Variant>("A");
 
   useEffect(() => {
-    setVariant(getVariant());
+    let currentVariant = sessionStoreUtil.get(VARIANT_TESTING_KEY) as Variant;
+
+    if (!currentVariant) {
+      currentVariant = getVariant();
+      sessionStoreUtil.set(VARIANT_TESTING_KEY, currentVariant);
+    }
+
+    setVariant(currentVariant);
   }, []);
 
   const handleSearch = async (city: string) => {

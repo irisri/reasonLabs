@@ -11,3 +11,13 @@ export const convertWeatherResponseToWeatherData = (
     fealsLike: wetherResponse.main.feels_like,
   };
 };
+
+export const sessionStoreUtil = {
+  get: (key: string) => {
+    const data = sessionStorage.getItem(key);
+    if (!data) return null;
+    return JSON.parse(data);
+  },
+  set: (key: string, data: string) =>
+    sessionStorage.setItem(key, JSON.stringify(data)),
+};
