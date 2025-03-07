@@ -1,4 +1,4 @@
-import { WeatherData, WeatherResponse } from "@/types";
+import { City, WeatherData, WeatherResponse } from "@/types";
 
 export const convertWeatherResponseToWeatherData = (
   wetherResponse: WeatherResponse
@@ -18,6 +18,6 @@ export const sessionStoreUtil = {
     if (!data) return null;
     return JSON.parse(data);
   },
-  set: (key: string, data: string) =>
+  set: (key: string, data: string | City[]) =>
     sessionStorage.setItem(key, JSON.stringify(data)),
 };

@@ -9,7 +9,7 @@ import { getVariant } from "@/lib/abTest";
 import { addToRecentCities } from "@/lib/storage";
 import { City, Variant } from "@/types";
 import { sessionStoreUtil } from "@/lib/util";
-import { VARIANT_TESTING_KEY } from "@/consts";
+import { RECENT_CITIES_KEY, VARIANT_TESTING_KEY } from "@/consts";
 
 export default function Home() {
   const [cities, setCities] = useState<City[]>([]);
@@ -18,6 +18,11 @@ export default function Home() {
 
   useEffect(() => {
     let currentVariant = sessionStoreUtil.get(VARIANT_TESTING_KEY) as Variant;
+    let storageCities: City[] = sessionStoreUtil.get(RECENT_CITIES_KEY) || [];
+
+    if (storageCities.length > 0) {
+      setCities(storageCities);
+    }
 
     if (!currentVariant) {
       currentVariant = getVariant();

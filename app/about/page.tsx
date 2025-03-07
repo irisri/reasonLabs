@@ -9,6 +9,7 @@ const data = [
   "8. added presistent variant with useing session storage",
   "9. added a util functuin to get and set from session storage",
   "10. add a nav bar to navigat to home page and about",
+  "11. fixed the duplicate cities issue and make sure that it's perssistent",
 ];
 
 const About = () => {
