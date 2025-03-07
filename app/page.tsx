@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 import RecentSearches from "@/app/components/RecentSearches";
 import SearchBar from "@/app/components/SearchBar";
@@ -10,11 +10,16 @@ import { addToRecentCities } from "@/lib/storage";
 import { City, Variant } from "@/types";
 import { sessionStoreUtil } from "@/lib/util";
 import { RECENT_CITIES_KEY, VARIANT_TESTING_KEY } from "@/consts";
+import { RootState } from "./store";
+import { setTestVariant } from "./redux/variantSlice";
+import { setCities, setSelectedCity } from "./redux/weatherSlice";
 
 export default function Home() {
-  const [cities, setCities] = useState<City[]>([]);
-  const [selectedCity, setSelectedCity] = useState<string>("");
-  const [variant, setVariant] = useState<Variant>("A");
+  const selectedCity = useSelector(
+    (state: RootState) => state.weather.selectedCity
+  );
+  const cities = useSelector((state: RootState) => state.weather.cities);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let currentVariant = sessionStoreUtil.get(VARIANT_TESTING_KEY) as Variant;
@@ -29,7 +34,7 @@ export default function Home() {
       sessionStoreUtil.set(VARIANT_TESTING_KEY, currentVariant);
     }
 
-    setVariant(currentVariant);
+    dispatch(setTestVariant(currentVariant));
   }, []);
 
   const handleSearch = async (city: string) => {
@@ -54,9 +59,7 @@ export default function Home() {
 
         <SearchBar onSearch={handleSearch} />
 
-        {selectedCity && (
-          <WeatherDisplay city={selectedCity} variant={variant} />
-        )}
+        {selectedCity && <WeatherDisplay city={selectedCity} />}
 
         <RecentSearches cities={cities} onCityClick={setSelectedCity} />
       </main>

@@ -5,6 +5,8 @@ import { Variant, WeatherDisplayVariant } from "@/types";
 import { WeatherDisplayVariantB } from "./WeatherDisplayVariantB";
 import { WeatherDisplayVariantA } from "./WeatherDisplayVariantA";
 import { FC } from "react";
+import { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 const variantMap: Record<Variant, FC<WeatherDisplayVariant>> = {
   A: WeatherDisplayVariantA,
@@ -13,7 +15,6 @@ const variantMap: Record<Variant, FC<WeatherDisplayVariant>> = {
 
 type Props = {
   city: string;
-  variant: Variant;
 };
 
 const getWeatherDisplayComponent = (
@@ -22,9 +23,10 @@ const getWeatherDisplayComponent = (
   return variantMap[variant] || variantMap.A;
 };
 
-export function WeatherDisplay({ city, variant }: Props) {
+export function WeatherDisplay({ city }: Props) {
+  const variant = useSelector((state: RootState) => state.variant.testVariant);
+
   const { weather, loading, error } = useWeatherQuery(city);
-  console.log("v", variant);
 
   if (loading)
     return (
