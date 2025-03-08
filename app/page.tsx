@@ -26,7 +26,7 @@ export default function Home() {
     let storageCities: City[] = sessionStoreUtil.get(RECENT_CITIES_KEY) || [];
 
     if (storageCities.length > 0) {
-      setCities(storageCities);
+      dispatch(setCities(storageCities));
     }
 
     if (!currentVariant) {
@@ -41,11 +41,16 @@ export default function Home() {
     const response = await fetch(`/api/location/search?query=${city}`);
     const data = await response.json();
     if (data.length > 0) {
-      setSelectedCity(city);
+      dispatch(setSelectedCity(city));
       const updatedCities = addToRecentCities(city);
-      setCities(updatedCities);
+      dispatch(setCities(updatedCities));
     }
   };
+
+  const selectCity = (cityName: string) => {
+    dispatch(setSelectedCity(cityName));
+  };
+
   return (
     <ErrorBoundary>
       <main className="min-h-screen bg-gradient-to-b from-gray-700 to-gray-800 p-4">
@@ -61,7 +66,7 @@ export default function Home() {
 
         {selectedCity && <WeatherDisplay city={selectedCity} />}
 
-        <RecentSearches cities={cities} onCityClick={setSelectedCity} />
+        <RecentSearches cities={cities} onCityClick={selectCity} />
       </main>
     </ErrorBoundary>
   );
