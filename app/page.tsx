@@ -38,12 +38,16 @@ export default function Home() {
   }, []);
 
   const handleSearch = async (city: string) => {
-    const response = await fetch(`/api/location/search?query=${city}`);
-    const data = await response.json();
-    if (data.length > 0) {
-      dispatch(setSelectedCity(city));
-      const updatedCities = addToRecentCities(city);
-      dispatch(setCities(updatedCities));
+    try {
+      const response = await fetch(`/api/location/search?query=${city}`);
+      const data = await response.json();
+      if (data.length > 0) {
+        dispatch(setSelectedCity(city));
+        const updatedCities = addToRecentCities(city);
+        dispatch(setCities(updatedCities));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 

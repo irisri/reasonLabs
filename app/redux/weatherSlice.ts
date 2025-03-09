@@ -2,12 +2,12 @@ import { City } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type WeatherState = {
-  selectedCity: string;
+  selectedCity: string | null;
   cities: City[];
 };
 
 const initialState: WeatherState = {
-  selectedCity: "",
+  selectedCity: null,
   cities: [],
 };
 
