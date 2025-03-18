@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ErrorBoundary from "@/app/components/ErrorBoundary";
 import RecentSearches from "@/app/components/RecentSearches";
@@ -13,6 +13,7 @@ import { RECENT_CITIES_KEY, VARIANT_TESTING_KEY } from "@/consts";
 import { RootState } from "./store";
 import { setTestVariant } from "./redux/variantSlice";
 import { setCities, setSelectedCity } from "./redux/weatherSlice";
+import { ErrorMessage } from "./components/ErrorMessage";
 
 export default function Home() {
   const selectedCity = useSelector(
@@ -20,6 +21,7 @@ export default function Home() {
   );
   const cities = useSelector((state: RootState) => state.weather.cities);
   const dispatch = useDispatch();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     let currentVariant = sessionStoreUtil.get(VARIANT_TESTING_KEY) as Variant;
@@ -41,13 +43,22 @@ export default function Home() {
     try {
       const response = await fetch(`/api/location/search?query=${city}`);
       const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error);
+      }
+
       if (data.length > 0) {
         dispatch(setSelectedCity(city));
         const updatedCities = addToRecentCities(city);
         dispatch(setCities(updatedCities));
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+        return;
+      }
+      setError("Something went wrong");
     }
   };
 
@@ -67,6 +78,7 @@ export default function Home() {
         </div>
 
         <SearchBar onSearch={handleSearch} />
+        {error.length > 0 && <ErrorMessage error={error} />}
 
         {selectedCity && <WeatherDisplay city={selectedCity} />}
 

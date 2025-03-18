@@ -40,8 +40,6 @@ export async function GET(
     }
 
     return NextResponse.json(data);
-
-    return NextResponse.json({});
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error" },

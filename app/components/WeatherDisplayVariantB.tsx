@@ -1,6 +1,6 @@
 import { WeatherDisplayVariant } from "@/types";
 import { WeatherIcon } from "./WeatherIcon";
-import { Droplets, Wind } from "lucide-react";
+import { Droplets, Wind, Thermometer } from "lucide-react";
 
 export function WeatherDisplayVariantB({
   city,
@@ -53,7 +53,7 @@ export function WeatherDisplayVariantB({
 
         <div className="bg-gray-700/50 p-4 rounded-lg">
           <div className="flex items-center gap-2 text-gray-400 mb-1">
-            <Wind className="w-4 h-4" color={"#70A3F3"} />
+            <Thermometer className="w-4 h-4" color={"#70A3F3"} />
             Feels like
           </div>
           <dd className="text-2xl font-semibold text-gray-100">

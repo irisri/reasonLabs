@@ -4,6 +4,7 @@ import { useWeatherQuery } from "@/hooks/useWeatherQuery";
 import { Variant, WeatherDisplayVariant } from "@/types";
 import { WeatherDisplayVariantB } from "./WeatherDisplayVariantB";
 import { WeatherDisplayVariantA } from "./WeatherDisplayVariantA";
+import { ErrorMessage } from "./ErrorMessage";
 import { FC } from "react";
 import { RootState } from "../store";
 import { useSelector } from "react-redux";
@@ -35,14 +36,7 @@ export function WeatherDisplay({ city }: Props) {
       </div>
     );
 
-  if (error)
-    return (
-      <div className="w-full p-6 bg-red-900/20 rounded-xl shadow-lg">
-        <div className="text-red-400 text-center">
-          <span className="font-semibold">Error:</span> {error}
-        </div>
-      </div>
-    );
+  if (error) return <ErrorMessage error={error} />;
 
   if (!weather) return null;
 
